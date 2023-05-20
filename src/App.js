@@ -1,6 +1,16 @@
 const App = () => {
   return (
     <div className="App">
+      <section className={"sidebar"}>
+        <button>New Chat</button>
+        <ul className={"history"}>
+
+        </ul>
+        <nav>
+          <p>Made by Sam</p>
+        </nav>
+      </section>
+      <section className={"main"}></section>
 
     </div>
   );
