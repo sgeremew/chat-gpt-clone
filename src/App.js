@@ -1,4 +1,24 @@
 const App = () => {
+
+    const getMessages = async () => {
+        const options = {
+            method: 'POST',
+            body: JSON.stringify({
+                message: 'how are you?'
+            }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+
+        try {
+            const response = await fetch('https://localhost:8000/completions', options);
+            const data = response.json();
+            console.log(data);
+        } catch (err) {
+            console.error(err);
+        }
+    }
   return (
     <div className="app">
       <section className={"sidebar"}>
@@ -18,7 +38,7 @@ const App = () => {
           <div className={"bottom-section"}>
               <div className={"input-container"}>
                   <input/>
-                  <div id={"submit"}>➢</div>
+                  <div id={"submit"} onClick={getMessages}>➢</div>
               </div>
               <p className={"info"}>
                   ChatGPT clone preview. This is a beta using the ChatGPT API.
