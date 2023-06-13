@@ -1,13 +1,13 @@
 import {useState, useEffect} from 'react';
 
 const App = () => {
-    const [ value, setValue ] = useState(null);
+    const [ value, setValue ] = useState('');
     const [ message, setMessage ] = useState(null);
     const [ previousChats, setPreviousChats ] = useState([]);
     const [ currentTitle, setCurrentTitle ] = useState(null);
 
     const createNewChat = () => {
-        console.log('createNewChat');
+        // console.log('createNewChat');
         setMessage(null);
         setValue('');
         setCurrentTitle(null);
@@ -40,7 +40,7 @@ const App = () => {
     };
 
     useEffect(() => {
-        console.log(currentTitle, value, message);
+        // console.log(currentTitle, value, message);
         if (!currentTitle && value && message) {
             setCurrentTitle(value);
         }
@@ -62,11 +62,11 @@ const App = () => {
         }
     }, [message, currentTitle]);
 
-    console.log(previousChats);
+    // console.log(previousChats);
 
     const currentChat = previousChats.filter(prevChat => prevChat.title === currentTitle);
     const uniqueTitles = Array.from(new Set(previousChats.map(prevChat => prevChat.title)));
-    console.log(uniqueTitles);
+    // console.log(uniqueTitles);
 
   return (
     <div className="app">
