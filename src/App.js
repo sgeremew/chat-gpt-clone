@@ -2,7 +2,16 @@ import {useState, useEffect} from 'react';
 
 const App = () => {
     const [ value, setValue ] = useState(null);
-    const [ message, setMessages ] = useState(null);
+    const [ message, setMessage ] = useState(null);
+    const [ previousChats, setPreviousChats ] = useState([]);
+    const [ currentTitle, setCurrentTitle ] = useState(null);
+
+    const createNewChat = () => {
+        console.log('createNewChat');
+        setMessage(null);
+        setValue('');
+        setCurrentTitle(null);
+    }
 
     const getMessages = async () => {
         const options = {
@@ -16,33 +25,64 @@ const App = () => {
         };
 
         const url = 'http://localhost:8000/completions';
-        console.log('url, options', url, options);
+        // console.log('url, options', url, options);
         try {
             const response = await fetch(url, options);
             const data = await response.json();
-            setMessages(data.choices[0].message);
+            setMessage(data.choices?.[0].message || 'N/A');
         } catch (err) {
             console.error(err);
         }
     };
 
-    console.log('value: ', value);
+    useEffect(() => {
+        console.log(currentTitle, value, message);
+        if (!currentTitle && value && message) {
+            setCurrentTitle(value);
+        }
+        if (currentTitle && value && message) {
+            setPreviousChats(prevChats => (
+                [...prevChats,
+                    {
+                        title: currentTitle,
+                        role: 'user',
+                        content: value
+                    },
+                    {
+                        title: currentTitle,
+                        role: message.role,
+                        content: message.content
+                    }
+                ]
+            ));
+        }
+    }, [message, currentTitle]);
+
+    console.log(previousChats);
+
+    const currentChat = previousChats.filter(prevChat => prevChat.title === currentTitle);
+    const uniqueTitles = Array.from(new Set(previousChats.map(prevChat => prevChat.title)));
+    console.log(uniqueTitles);
 
   return (
     <div className="app">
       <section className={"sidebar"}>
-        <button>+ New Chat</button>
+        <button onClick={createNewChat}>+ New Chat</button>
         <ul className={"history"}>
-            <li>stuff here</li>
+            {uniqueTitles?.map((uniqueTitle, index) => <li key={index}>{uniqueTitle}</li>)}
         </ul>
         <nav>
           <p>Made by Sam</p>
         </nav>
       </section>
       <section className={"main"}>
-          <h1>SamGPT</h1>
+          {!currentTitle && <h1>SamGPT</h1>}
           <ul className={"feed"}>
-
+              {currentChat.map((chatMessage, index) =>
+                  <li key={index}>
+                      <p className="role">{chatMessage.role}</p>
+                      <p>{chatMessage.message}</p>
+                  </li>)}
           </ul>
           <div className={"bottom-section"}>
               <div className={"input-container"}>
