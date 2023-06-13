@@ -16,8 +16,8 @@ app.post('/completions', async (req, res) => {
             "Content-Type": "application/json"
         },
         body: JSON.stringify({
-            model:  '',
-            method: [{role: "user", content: "how are you?"}],
+            model:  'gpt-3.5-turbo',
+            messages: [{role: "user", content: req.body.message}],
             max_tokens: 100
         })
     };
