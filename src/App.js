@@ -11,7 +11,11 @@ const App = () => {
         setMessage(null);
         setValue('');
         setCurrentTitle(null);
-    }
+    };
+
+    const handleClick = (uniqueTitle) => {
+        setCurrentTitle(uniqueTitle)
+    };
 
     const getMessages = async () => {
         const options = {
@@ -68,9 +72,10 @@ const App = () => {
     <div className="app">
       <section className={"sidebar"}>
         <button onClick={createNewChat}>+ New Chat</button>
-        <ul className={"history"}>
-            {uniqueTitles?.map((uniqueTitle, index) => <li key={index}>{uniqueTitle}</li>)}
-        </ul>
+          <ul className={"history"}>
+              {uniqueTitles?.map((uniqueTitle, index) =>
+                  <li key={index} onClick={() => handleClick(uniqueTitle)}>{uniqueTitle}</li>)}
+          </ul>
         <nav>
           <p>Made by Sam</p>
         </nav>
@@ -78,10 +83,10 @@ const App = () => {
       <section className={"main"}>
           {!currentTitle && <h1>SamGPT</h1>}
           <ul className={"feed"}>
-              {currentChat.map((chatMessage, index) =>
+              {currentChat?.map((chatMessage, index) =>
                   <li key={index}>
                       <p className="role">{chatMessage.role}</p>
-                      <p>{chatMessage.message}</p>
+                      <p>{chatMessage.content}</p>
                   </li>)}
           </ul>
           <div className={"bottom-section"}>
