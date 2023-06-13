@@ -1,24 +1,26 @@
 const App = () => {
-
     const getMessages = async () => {
         const options = {
-            method: 'POST',
+            method: "POST",
             body: JSON.stringify({
-                message: 'how are you?'
+                message: "how are you?"
             }),
             headers: {
-                'Content-Type': 'application/json'
+                "Content-Type": "application/json"
             }
-        }
+        };
 
+        const url = 'http://localhost:8000/completions';
+        console.log('url, options', url, options);
         try {
-            const response = await fetch('https://localhost:8000/completions', options);
-            const data = response.json();
+            const response = await fetch(url, options);
+            const data = await response.json();
             console.log(data);
         } catch (err) {
             console.error(err);
         }
-    }
+    };
+
   return (
     <div className="app">
       <section className={"sidebar"}>
