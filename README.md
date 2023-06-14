@@ -1,4 +1,6 @@
-# Getting Started with Create React App
+# ChatGPT Clone React App
+
+This project is a clone of OpenAI's [ChatGPT](https://chat.openai.com/). It uses the OpenAI API to access the gpt-3.5-turbo model and authenticates with a generated API Key.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
@@ -6,13 +8,17 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 In the project directory, you can run:
 
-### `npm start`
+### `npm run start:frontend`
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
 The page will reload when you make changes.\
 You may also see any lint errors in the console.
+
+### `npm run start:backend`
+
+Runs express server at port 8000
 
 ### `npm test`
 
