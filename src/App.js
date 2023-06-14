@@ -7,7 +7,6 @@ const App = () => {
     const [ currentTitle, setCurrentTitle ] = useState(null);
 
     const createNewChat = () => {
-        // console.log('createNewChat');
         setMessage(null);
         setValue('');
         setCurrentTitle(null);
@@ -15,6 +14,12 @@ const App = () => {
 
     const handleClick = (uniqueTitle) => {
         setCurrentTitle(uniqueTitle)
+    };
+
+    const handleKeyUp = async (event) => {
+        if (event.key === 'Enter') {
+            await getMessages();
+        }
     };
 
     const getMessages = async () => {
@@ -29,7 +34,6 @@ const App = () => {
         };
 
         const url = 'http://localhost:8000/completions';
-        // console.log('url, options', url, options);
         try {
             const response = await fetch(url, options);
             const data = await response.json();
@@ -40,7 +44,6 @@ const App = () => {
     };
 
     useEffect(() => {
-        // console.log(currentTitle, value, message);
         if (!currentTitle && value && message) {
             setCurrentTitle(value);
         }
@@ -62,11 +65,8 @@ const App = () => {
         }
     }, [message, currentTitle]);
 
-    // console.log(previousChats);
-
     const currentChat = previousChats.filter(prevChat => prevChat.title === currentTitle);
     const uniqueTitles = Array.from(new Set(previousChats.map(prevChat => prevChat.title)));
-    // console.log(uniqueTitles);
 
   return (
     <div className="app">
@@ -91,7 +91,7 @@ const App = () => {
           </ul>
           <div className={"bottom-section"}>
               <div className={"input-container"}>
-                  <input value={value} onChange={(e) => setValue(e.target.value)}/>
+                  <input value={value} onChange={(e) => setValue(e.target.value)} onKeyUp={handleKeyUp}/>
                   <div id={"submit"} onClick={getMessages}>➢</div>
               </div>
               <p className={"info"}>
