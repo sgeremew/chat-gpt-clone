@@ -4,6 +4,12 @@ This project is a clone of OpenAI's [ChatGPT](https://chat.openai.com/). It uses
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Setup
+
+Add a file to the root directory called ".env" and add your OpenAI API Key to it in the following format:
+
+`REACT_APP_API_KEY=your_api_key_goes_here`
+
 ## Available Scripts
 
 In the project directory, you can run:
